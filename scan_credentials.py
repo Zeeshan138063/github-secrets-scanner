@@ -188,58 +188,30 @@ class ReportGenerator:
 
     def generate(self, repo_name: str, findings: List[CredentialFinding]) -> Path:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        report_file = self.output_dir / f"{repo_name}_credentials_{timestamp}.csv"
+        report_file = self.output_dir / f"{repo_name}_credentials_{timestamp}.md"
 
-        with report_file.open(mode="w", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow([
-                "Repository",
-                "Rule ID",
-                "Description",
-                "File",
-                "Line",
-                "Line Content",
-                "Start Line",
-                "Start Column",
-                "End Line",
-                "End Column",
-                "Date"
-            ])
+        with report_file.open(mode="w", encoding="utf-8") as file:
+            file.write(f"# Credential Scan Report - {repo_name}\n\n")
+            file.write(f"**Date:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
 
             if not findings:
-                writer.writerow([
-                    repo_name,
-                    "N/A",
-                    "No credentials found",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    datetime.now().strftime("%Y-%m-%d")
-                ])
+                file.write("## No credentials found ✅\n")
             else:
+                file.write("## Detected Credentials\n\n")
+                file.write(
+                    "| Rule ID | Description | File | Line | Line Content | Start Line | Start Column | End Line | End Column | Date |\n")
+                file.write(
+                    "|---------|------------|------|------|-------------|------------|--------------|---------|-----------|------|\n")
+
                 for finding in findings:
-                    writer.writerow([
-                        repo_name,
-                        finding.rule_id,
-                        finding.description,
-                        finding.file_path,
-                        finding.line_number,
-                        finding.code_line,
-                        finding.start_line,
-                        finding.start_column,
-                        finding.end_line,
-                        finding.end_column,
-                        finding.date
-                    ])
+                    file.write(
+                        f"| {finding.rule_id} | {finding.description} | {finding.file_path} | {finding.line_number} | "
+                        f"`{finding.code_line}` | {finding.start_line} | {finding.start_column} | {finding.end_line} | "
+                        f"{finding.end_column} | {finding.date} |\n"
+                    )
 
-        print(f"\n📄 Report generated: {report_file}")
+        print(f"\n📄 Markdown report generated: {report_file}")
         return report_file
-
-
 def main():
     parser = argparse.ArgumentParser(
         description="Scan GitHub repositories for exposed credentials and secrets",
