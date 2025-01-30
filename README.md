@@ -3,10 +3,15 @@
 A Python-based tool to scan GitHub repositories for exposed credentials, API keys, tokens, and secrets using Gitleaks. Automatically generates detailed reports for multiple repositories.
 
 ## Features
-- Scan multiple repositories in one go.
-- Generate beautiful Markdown reports for each repository.
-- Supports both public and private repositories.
-- Easy to set up and use.
+- Scan multiple repositories in one go
+- Interactive Streamlit web interface for easy scanning
+- Real-time scan progress monitoring
+- Interactive visualization of scan results
+- Export results in CSV format
+- Generate detailed Markdown reports
+- Supports both public and private repositories
+- Easy to set up and use
+
 
 ## Prerequisites
 - Python 3.x
@@ -44,8 +49,28 @@ A Python-based tool to scan GitHub repositories for exposed credentials, API key
    GITHUB_TOKEN='your_github_personal_access_token'
    ```
 
+
 ## Usage
 
+### Streamlit Web Interface
+1. **Start the Streamlit app**:
+   ```bash
+   streamlit run streamlit_app.py
+   ```
+
+2. **Access the web interface**:
+   - Open your browser and go to `http://localhost:8501`
+   - Enter your GitHub token in the sidebar (or it will use the token from `.env`)
+   - Input repository URLs directly or upload a text file
+   - Click "Start Scan" to begin scanning
+
+3. **View and Export Results**:
+   - Monitor real-time scanning progress
+   - View interactive tables of findings
+   - Download results as CSV files
+   - Access historical scan results within the session
+
+### Command Line Interface
 1. **Add repositories to scan**:
    Add the repositories you want to scan in `repos.txt` (one repository URL per line):
    ```
@@ -60,7 +85,7 @@ A Python-based tool to scan GitHub repositories for exposed credentials, API key
    ```
 
 3. **Check the generated reports**:
-   - Each repository will have a Markdown report named `<repo_name>_report.md` in the `reports/` directory.
+   - Each repository will have a Markdown report named `<repo_name>_report.md` in the `reports/` directory
 
 ## Example Report
 
