@@ -71,11 +71,12 @@ Here’s an example of what the report looks like:
 
 ## Scan Results
 
-| Secret Type   | File          | Line | Commit  | Secret               |
-|---------------|---------------|------|---------|----------------------|
-| AWS Access Key| config.yml    | 10   | abc123  | AKIAXXXXXXXXXXXXXXXX |
-| GitHub Token  | .env          | 5    | def456  | ghp_xxxxxxxxxxxxxxxx |
+| Rule ID | Description | File | Line | Line Content | Start Line | Start Column | End Line | End Column | Date |
+|---------|------------|------|------|-------------|------------|--------------|---------|-----------|------|
+| slack-webhook-url | Slack Webhook URL - Used for sending messages to Slack channels | slack_notification.py | 8 | `url = "https://hooks.slack.com/services/TALp8hw\OmZ"` | 8 | 1 | 8 | 86 | 2025-01-30 |
 ```
+
+
 
 ## Folder Structure
 
